@@ -13,6 +13,7 @@
     <string name="text_MNYCH">闽南语词汇</string>
     <string name="text_PTHM">普通话：</string>
     <string name="text_LMPYM">罗马拼音：</string>
+    <string name="text_slh">...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -26,15 +27,4 @@
     <string name="XZ">浙江大学闽南语发展SQTP项目小组" </string>
     <string name="XZXX">组长：洪钰溯\n\n成员：陈谋祥 詹依燃 陈雅婧 李汉泽 黄惠萍\n\n顾问：何畋 张鑫</string>
 
-    <string-array name="discovery_title">
-        <item></item>
-    </string-array>
-
-    <string-array name="discovery_resource">
-        <item>搜狐网</item>
-    </string-array>
-
-    <string-array name="discovery_url">
-        <item>http://m.sohu.com/a/130956346_488328</item>
-    </string-array>
 </resources>

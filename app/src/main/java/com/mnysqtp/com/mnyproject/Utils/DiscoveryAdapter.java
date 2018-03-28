@@ -30,14 +30,26 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(mInfoList.get(position).getTitle());
-        System.out.println(mInfoList.get(position).getTitle());
-        holder.resource.setText(mInfoList.get(position).getResource());
+        String title = mInfoList.get(position).getTitle();
+        String url = mInfoList.get(position).getUrl();
+        String resource = mInfoList.get(position).getResource();
+        holder.title.setText(title);
+        holder.resource.setText(getResourceName(resource, url));
     }
 
     @Override
     public int getItemCount() {
         return mInfoList.size();
+    }
+
+    public static String getResourceName(String rawResource, String url) {
+        String[] array = url.split("/");
+        for (String s: array) {
+            if (s.length() >= 7) {
+                return rawResource + " " + s;
+            }
+        }
+        return rawResource;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
