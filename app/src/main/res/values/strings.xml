@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">闽南语翻译器</string>
+    <string name="title_home">词典</string>
+    <string name="title_translation">翻译</string>
+    <string name="title_discovery">发现</string>
+    <string name="title_about">更多</string>
+    <string name="hint_search">请输入汉语字词或闽南语罗马拼音</string>
+    <string name="hint_searchSentence">在此输入现代汉语句子，并点击搜索键。</string>
+    <string name="text_FYJG">翻译结果</string>
+    <string name="text_NanY">男音</string>
+    <string name="text_NvY">女音</string>
+    <string name="text_CKTYZ">查看同音字</string>
+    <string name="text_MNYCH">闽南语词汇</string>
+    <string name="text_PTHM">普通话：</string>
+    <string name="text_LMPYM">罗马拼音：</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ZZ">作者</string>
+    <string name="CMX">陈谋祥</string>
+    <string name="LY">录音</string>
+    <string name="LHZ">李汉泽</string>
+    <string name="HHP">黄惠萍</string>
+    <string name="CLLY">材料来源： http://www.laimn.cn/</string>
+    <string name="ABOUT">关于我们</string>
+    <string name="XZ">浙江大学闽南语发展SQTP项目小组" </string>
+    <string name="XZXX">组长：洪钰溯\n\n成员：陈谋祥 詹依燃 陈雅婧 李汉泽 黄惠萍\n\n顾问：何畋 张鑫</string>
+
+    <string-array name="discovery_title">
+        <item></item>
+    </string-array>
+
+    <string-array name="discovery_resource">
+        <item>搜狐网</item>
+    </string-array>
+
+    <string-array name="discovery_url">
+        <item>http://m.sohu.com/a/130956346_488328</item>
+    </string-array>
+</resources>

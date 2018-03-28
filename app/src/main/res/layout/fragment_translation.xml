@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mnysqtp.com.mnyproject.Fragment.TranslationFragment">
+
+
+    <EditText
+        android:id="@+id/id_translation_edit"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/layout"
+        android:ems="10"
+        android:hint="@string/hint_searchSentence"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        android:minLines="5" />
+
+    <ImageButton
+        android:id="@+id/id_search_imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/id_translation_edit"
+        android:layout_alignRight="@+id/id_translation_edit"
+        android:layout_below="@+id/id_translation_edit"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_search_black_24dp" />
+
+    <ScrollView
+        android:id="@+id/Scroll_tran"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        android:layout_below="@+id/id_search_imageButton">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_FYJG" />
+
+            <TextView
+                android:id="@+id/id_translationresult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView"
+                android:layout_alignStart="@+id/textView"
+                android:layout_below="@+id/textView"
+                android:layout_marginTop="30dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <ImageButton
+                android:id="@+id/id_male_tran"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@+id/id_RomanResult"
+                android:layout_alignStart="@+id/id_RomanResult"
+                android:layout_below="@+id/id_RomanResult"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_launcher_foreground"
+                app:srcCompat="@drawable/ic_volume_down_black_24dp" />
+
+            <TextView
+                android:id="@+id/id_maletext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/id_male_tran"
+                android:layout_toEndOf="@+id/id_male_tran"
+                android:layout_toRightOf="@+id/id_male_tran"
+                android:text="@string/text_NanY" />
+
+            <ImageButton
+                android:id="@+id/id_female_tran"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/id_maletext"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_launcher_foreground"
+                app:srcCompat="@drawable/ic_volume_down_black_24dp" />
+
+            <TextView
+                android:id="@+id/id_femaletext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/id_maletext"
+                android:layout_toEndOf="@+id/id_female_tran"
+                android:layout_toRightOf="@+id/id_female_tran"
+                android:text="@string/text_NvY" />
+
+            <TextView
+                android:id="@+id/id_RomanResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/id_translationresult"
+                android:layout_alignStart="@+id/id_translationresult"
+                android:layout_below="@+id/id_translationresult"
+                android:layout_marginTop="12dp"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
