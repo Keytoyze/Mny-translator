@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.mnysqtp.com.mnyproject.Info.DiscoveryInfo;
 import com.mnysqtp.com.mnyproject.R;
-import com.mnysqtp.com.mnyproject.Utils.DiscoveryAdapter;
+import com.mnysqtp.com.mnyproject.Adapter.DiscoveryAdapter;
 import com.mnysqtp.com.mnyproject.Utils.DividerItemDecoration;
 
-public class DiscoveryFragment extends android.app.Fragment{
+public class DiscoveryFragment extends android.support.v4.app.Fragment{
 
     RecyclerView recyclerView;
     DiscoveryAdapter adapter;

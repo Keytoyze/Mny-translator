@@ -10,7 +10,9 @@ import android.content.res.XmlResourceParser;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.mnysqtp.com.mnyproject.Adapter.PagerAdapter;
 import com.mnysqtp.com.mnyproject.Fragment.AboutFragment;
 import com.mnysqtp.com.mnyproject.Fragment.BlankFragment;
 import com.mnysqtp.com.mnyproject.Fragment.DictionaryFragment;
@@ -38,12 +41,8 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         TranslationFragment.OnFragmentInteractionListener,
         BlankFragment.OnFragmentInteractionListener{
     BottomNavigationBar BNB;
-    FragmentTransaction ft;
-    DictionaryFragment m1;
-    TranslationFragment m2;
-    DiscoveryFragment m3;
-    AboutFragment m4;
-    Fragment formerFragment;
+    FragmentPagerAdapter adapter;
+    ViewPager viewPager;
     long mExitTime = 0;
     @Override
     public void onFragmentInteraction(Uri Uri){
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewPager = findViewById(R.id.main_viewPager);
         setBottomNavigation();
         setFragmentInit();
         Intent I = getIntent();
@@ -121,12 +121,8 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
         BNB.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                switch (position){
-                    case 0:setFragment(m1);setTitle(R.string.app_name);break;
-                    case 1:setFragment(m2);setTitle(R.string.title_translation);break;
-                    case 2:setFragment(m3);setTitle(R.string.title_discovery);break;
-                    case 3:setFragment(m4);setTitle(R.string.title_about);break;
-                }
+                setFragmentTitle(position);
+                viewPager.setCurrentItem(position);
             }
 
             @Override
@@ -136,37 +132,22 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
             public void onTabReselected(int position) {}
         });
     }
-    public void setFragmentInit(){
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        m1 = new DictionaryFragment();
-        m2 = new TranslationFragment();
-        m3 = new DiscoveryFragment();
-        m4 = new AboutFragment();
-        transaction.add(R.id.id_MainFragment,m1);
-        transaction.add(R.id.id_MainFragment,m2);
-        transaction.add(R.id.id_MainFragment,m3);
-        transaction.add(R.id.id_MainFragment,m4);
-        transaction.hide(m2);
-        transaction.hide(m3);
-        transaction.hide(m4);
-        transaction.commit();
-        formerFragment = m1;
-    }
+    public void setFragmentInit() {
+        adapter = new PagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
-    public void setFragment(Fragment F){
-        if(F != formerFragment){
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.hide(formerFragment);
-            transaction.show(F);
-            transaction.commit();
-            formerFragment = F;
-        }
-    }
+            @Override
+            public void onPageSelected(int position) {
+                setFragmentTitle(position);
+                BNB.selectTab(position, false);
+            }
 
-    public void Translate(){
-
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 
     @Override
@@ -178,4 +159,14 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
             Toast.makeText(this, "再按返回键退出！", Toast.LENGTH_LONG).show();
             mExitTime = System.currentTimeMillis();
         }
-    }}
+    }
+
+    public void setFragmentTitle(int position) {
+        switch (position){
+            case 0:setTitle(R.string.app_name);break;
+            case 1:setTitle(R.string.title_translation);break;
+            case 2:setTitle(R.string.title_discovery);break;
+            case 3:setTitle(R.string.title_about);break;
+        }
+    }
+}

@@ -16,9 +16,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <fragment
+    <!--fragment
         android:id="@+id/id_MainFragment"
         android:name="com.mnysqtp.com.mnyproject.Fragment.BlankFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/BottomNavigationB"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" /-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/BottomNavigationB"
