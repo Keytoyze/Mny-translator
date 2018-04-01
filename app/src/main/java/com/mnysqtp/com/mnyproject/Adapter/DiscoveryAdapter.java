@@ -35,11 +35,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         String resource = mInfoList.get(position).getResource();
         String uriResource = mInfoList.get(position).getUriResource();
         holder.title.setText(title);
-        if (uriResource != null) {
-            holder.resource.setText(uriResource);
-        } else {
-            holder.resource.setText(getResourceName(resource, url));
-        }
+        holder.resource.setText(getResourceName(resource, url, uriResource));
     }
 
     @Override
@@ -47,7 +43,10 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         return mInfoList.size();
     }
 
-    public static String getResourceName(String rawResource, String url) {
+    private static String getResourceName(String rawResource, String url, String trueResource) {
+        if (trueResource != null) {
+            return rawResource + " " + trueResource;
+        }
         String[] array = url.split("/");
         for (String s: array) {
             if (s.length() >= 7) {
