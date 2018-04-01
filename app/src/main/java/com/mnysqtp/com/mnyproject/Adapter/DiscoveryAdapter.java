@@ -33,8 +33,13 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         String title = mInfoList.get(position).getTitle();
         String url = mInfoList.get(position).getUrl();
         String resource = mInfoList.get(position).getResource();
+        String uriResource = mInfoList.get(position).getUriResource();
         holder.title.setText(title);
-        holder.resource.setText(getResourceName(resource, url));
+        if (uriResource != null) {
+            holder.resource.setText(uriResource);
+        } else {
+            holder.resource.setText(getResourceName(resource, url));
+        }
     }
 
     @Override

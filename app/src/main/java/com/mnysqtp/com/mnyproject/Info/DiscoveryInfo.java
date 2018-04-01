@@ -3,7 +3,6 @@ package com.mnysqtp.com.mnyproject.Info;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.support.annotation.XmlRes;
-import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,16 +15,27 @@ public class DiscoveryInfo {
     private String Url;
     private String title;
     private String resource;
+    private String uriResource;
 
     private static final String XML_TAG = "item";
     private static final String XML_ATTRIBUTE_NAME_TITLE = "title";
     private static final String XML_ATTRIBUTE_NAME_RESOURCE = "resource";
     private static final String XML_ATTRIBUTE_NAME_URL = "url";
+    private static final String XML_ATTRIBUTE_NAME_URL_RESOURCE = "urlresource";
 
-    private DiscoveryInfo(String Url, String title, String resource){
+    private DiscoveryInfo(String Url, String title, String resource, String trueResource){
         this.Url = Url;
         this.title = title;
         this.resource = resource;
+        this.uriResource = trueResource;
+    }
+
+    public String getUriResource() {
+        return uriResource;
+    }
+
+    public void setUriResource(String uriResource) {
+        this.uriResource = uriResource;
     }
 
     public String getUrl() {
@@ -66,7 +76,8 @@ public class DiscoveryInfo {
                             result.add(new DiscoveryInfo(
                                     xmlParser.getAttributeValue(null, XML_ATTRIBUTE_NAME_URL),
                                     xmlParser.getAttributeValue(null, XML_ATTRIBUTE_NAME_TITLE),
-                                    xmlParser.getAttributeValue(null, XML_ATTRIBUTE_NAME_RESOURCE)
+                                    xmlParser.getAttributeValue(null, XML_ATTRIBUTE_NAME_RESOURCE),
+                                    xmlParser.getAttributeValue(null, XML_ATTRIBUTE_NAME_URL_RESOURCE)
                             ));
                         }
                         break;
