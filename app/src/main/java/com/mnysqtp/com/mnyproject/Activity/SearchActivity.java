@@ -103,26 +103,38 @@ public class SearchActivity extends AppCompatActivity {
 
             }
 
+            @SuppressWarnings("unchecked")
             @Override
-            public void afterTextChanged(Editable s) {
-                String[] content;
-                content = SQLiteclass.getStringByRoman(et.getText().toString(),20);
-                if (et.getText().toString().isEmpty()){
-                    content = null;
-                }else {
-                    if (content.length == 0) {
-                        content = SQLiteclass.getStringByMandarin(et.getText().toString(), 20);
-                        if (content.length == 0) {
-                            content = new String[]{"整句翻译：" + et.getText().toString()};
+            public void afterTextChanged(final Editable s) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] content;
+                        content = SQLiteclass.getStringByRoman(s.toString(),20);
+                        if (s.toString().isEmpty()) {
+                            content = null;
+                        } else {
+                            if (content == null || content.length == 0) {
+                                content = SQLiteclass.getStringByMandarin(s.toString(), 20);
+                                if (content == null || content.length == 0) {
+                                    content = new String[]{"整句翻译：" + s.toString()};
+                                }
+                            }
                         }
+                        final String[] fContent = content;
+                        rv.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (fContent != null) {
+                                    rv.setVisibility(View.VISIBLE);
+                                    rv.setAdapter(new ArrayAdapter(t, android.R.layout.simple_list_item_1, fContent));
+                                } else {
+                                    rv.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
                     }
-                }
-                if (content != null){
-                    rv.setVisibility(View.VISIBLE);
-                    rv.setAdapter(new ArrayAdapter(t,android.R.layout.simple_list_item_1,content));
-                }else{
-                    rv.setVisibility(View.INVISIBLE);
-                }
+                }).start();
             }
         });
         Intent I = getIntent();

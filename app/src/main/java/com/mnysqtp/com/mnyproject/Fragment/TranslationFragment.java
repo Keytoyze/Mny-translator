@@ -99,20 +99,28 @@ public class TranslationFragment extends android.support.v4.app.Fragment {
         IB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuffer result = new StringBuffer();
-                StringBuffer result_roman = new StringBuffer();
-                String[] Minnan_ = null;
-                String[] Luoma_ = null;
-                String Path;
+                final StringBuffer result = new StringBuffer();
+                final StringBuffer result_roman = new StringBuffer();
                 InputManager.HideInput(ac, et);
-                re = SQLiteclass.Translate(et.getText().toString(), result, result_roman);
-                if (result != null && result.length() != 0 && result_roman != null && result_roman.length() != 0) {
-                    Sv.setVisibility(View.VISIBLE);
-                    RE.setText(result);
-                    RE2.setText(result_roman);
-                } else {
-                    Sv.setVisibility(View.INVISIBLE);
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        re = SQLiteclass.Translate(et.getText().toString(), result, result_roman);
+                        Sv.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (result.length() != 0 && result_roman.length() != 0) {
+                                    Sv.setVisibility(View.VISIBLE);
+                                    RE.setText(result);
+                                    RE2.setText(result_roman);
+                                } else {
+                                    Sv.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+                    }
+                }).start();
+
             }
         });
         male.setOnClickListener(new View.OnClickListener() {
