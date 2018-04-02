@@ -104,15 +104,37 @@ public class SQLiteclass {
     }
 
     public static String[] getStringByMandarin(String Mandarin,int Max){
+        boolean vo = false;
         if(Mandarin.isEmpty()){
             return null;
         }
         Cursor cursor = db.query(true,"Tran",new String[] {"*"},"Mandarin=?",new String[] {Mandarin},null,null,"Roman ASC",null);
+        if (cursor.getCount() == 0) {
+            vo = true;
+            cursor.close();
+            cursor = db.query(true, "Vocabulary", new String[]{"*"}, "Mandarin=?", new String[]{Mandarin}, null, null, null, null);
+        }
+
         if(cursor.getCount() > Max && Max != 0){
             cursor.moveToFirst();
             String[] Re = new String[20];
             for (int i = 1; i <= Max; i++){
-                Re[i-1] = cursor.getString(2) + " " + cursor.getString(0);
+                if (!vo) {
+                    Re[i-1] = cursor.getString(2) + " " + cursor.getString(0);
+                } else {
+                    String min = cursor.getString(1);
+                    StringBuilder sb = new StringBuilder();
+                    String rs[];
+                    for (int j = 0; j < min.length(); j++) {
+                        rs = getRomanByMandarin(min.substring(j, j+1), 1);
+                        if (rs == null || rs.length == 0) {
+                            continue;
+                        }
+                        sb.append(rs[0]);
+                    }
+                    Re[i-1] = sb.toString() + " " + cursor.getString(0);
+                }
+
                 cursor.moveToNext();
             }
             cursor.close();
@@ -121,7 +143,21 @@ public class SQLiteclass {
             cursor.moveToFirst();
             String[] Re = new String[cursor.getCount()];
             for (int i = 1; i <= cursor.getCount(); i++){
-                Re[i-1] = cursor.getString(2) + " "  + cursor.getString(0);
+                if (!vo) {
+                    Re[i-1] = cursor.getString(2) + " " + cursor.getString(0);
+                } else {
+                    String min = cursor.getString(1);
+                    StringBuilder sb = new StringBuilder();
+                    String rs[];
+                    for (int j = 0; j < min.length(); j++) {
+                        rs = getRomanByMandarin(min.substring(j, j+1), 1);
+                        if (rs == null || rs.length == 0) {
+                            continue;
+                        }
+                        sb.append(rs[0]);
+                    }
+                    Re[i-1] = sb.toString() + " " + cursor.getString(0);
+                }
                 cursor.moveToNext();
             }
             cursor.close();

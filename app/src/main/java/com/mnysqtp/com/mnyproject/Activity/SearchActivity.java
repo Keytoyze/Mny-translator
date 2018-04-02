@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mnysqtp.com.mnyproject.Adapter.PagerAdapter;
 import com.mnysqtp.com.mnyproject.Utils.InputManager;
 import com.mnysqtp.com.mnyproject.Utils.Mediaclass;
 import com.mnysqtp.com.mnyproject.R;
@@ -155,22 +156,28 @@ public class SearchActivity extends AppCompatActivity {
                     if (c.length == 2){
                         try{
                             String [] MN = SQLiteclass.getMinnanByMandarin(c[1],1);
-                        if (MN != null && MN.length >= 1){
-                            Mandarin.setText(c[1]);
-                            //et.setText(c[1]);
-                            LUOMA.setText(c[0]);
-                            MNY.setText(MN[0]);
-                            InputManager.HideInput(acti, et);
-                            S = false;
-                            rv.setVisibility(View.INVISIBLE);
-                            rl.setVisibility(View.VISIBLE);
-                            return;
-                        }
+                            if (MN != null && MN.length >= 1){
+                                Mandarin.setText(c[1]);
+                                //et.setText(c[1]);
+                                LUOMA.setText(c[0]);
+                                MNY.setText(MN[0]);
+                                InputManager.HideInput(acti, et);
+                                S = false;
+                                rv.setVisibility(View.INVISIBLE);
+                                rl.setVisibility(View.VISIBLE);
+                                return;
+                            } else {
+                                InputManager.HideInput(acti, et);
+                                Intent Re = new Intent();
+                                Re.putExtra("TRANSLATION", c[1]);
+                                setResult(1437,Re);
+                                acti.finish();
+                            }
                         }catch (Exception e){
                             Toast.makeText(t,e.toString(),Toast.LENGTH_LONG).show();
                         }
                     }
-                    Toast.makeText(t,"诶，获取失败了。。。",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(t,"诶，获取失败了。。。",Toast.LENGTH_LONG).show();
                 }
             }
         });
