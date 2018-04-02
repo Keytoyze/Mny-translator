@@ -10,13 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by 22428 on 2017/12/5.
- */
-
 public class SQLiteclass {
-    private static String PathName;
-    private static File DataFile;
     private final static String filePath = "data/data/com.mnysqtp.com.mnyproject/Tran.db";
     private final static String MusicPath = "data/data/com.mnysqtp.com.mnyproject/m.mp3";
     private final static String comMusicPath = "data/data/com.mnysqtp.com.mnyproject/m1.mp3";
@@ -42,6 +36,7 @@ public class SQLiteclass {
                 Re[i-1]=cursor.getString(2);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }else{
             String[] Re = new String[cursor.getCount()];
@@ -50,6 +45,7 @@ public class SQLiteclass {
                 Re[i-1]=cursor.getString(2);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }
 
@@ -67,6 +63,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }else{
             cursor.moveToFirst();
@@ -75,6 +72,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }
     }
@@ -91,6 +89,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(2) + " " + cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }else{
             cursor.moveToFirst();
@@ -99,6 +98,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(2) + " "  + cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }
     }
@@ -115,6 +115,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(2) + " " + cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }else{
             cursor.moveToFirst();
@@ -123,8 +124,13 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(2) + " "  + cursor.getString(0);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }
+    }
+
+    public static Cursor getMandarinVocabulary() {
+        return db.query("Vocabulary", new String[] {"*"}, null, null, null, null, null);
     }
 
     public static String[] getMinnanByMandarin(String Mandarin, int Max){
@@ -139,6 +145,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(1);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }else{
             cursor.moveToFirst();
@@ -147,6 +154,7 @@ public class SQLiteclass {
                 Re[i-1] = cursor.getString(1);
                 cursor.moveToNext();
             }
+            cursor.close();
             return Re;
         }
     }
@@ -160,6 +168,7 @@ public class SQLiteclass {
         }else{
             content = cursor.getBlob(2);
         }
+        cursor.close();
         FileOutputStream FOS = new FileOutputStream(MusicPath);
         FOS.write(content);
         FOS.flush();
@@ -168,7 +177,8 @@ public class SQLiteclass {
     }
 
     public static String[][] Translate(String Mandarin, StringBuffer Minnan, StringBuffer Luoma){
-        String Mandarin2 = Mandarin.replaceAll("\\s","");
+        String Mandarin3 = getMinnanVocabularyByMandarin(Mandarin);
+        String Mandarin2 = Mandarin3.replaceAll("\\s","");
         String[][] Result = new String[2][Mandarin2.length()];
         for(int i = 0; i < Mandarin2.length(); i++) {
             String subMandarin = Mandarin2.substring(i, i + 1);
@@ -182,13 +192,24 @@ public class SQLiteclass {
             }
             String[] LL = getRomanByMandarin(subMandarin, 1);
             if (LL != null && LL.length == 1) {
-                Luoma.append(LL[0] + " ");
+                Luoma.append(LL[0]).append(" ");
                 Result[1][i] = LL[0];
             } else {
                 Result[1][i] = "?";
             }
         }
         return Result;
+    }
+
+    public static String getMinnanVocabularyByMandarin(String mandarin) {
+        Cursor cursor = getMandarinVocabulary();
+        cursor.moveToFirst();
+        String re = mandarin;
+        do {
+            re = re.replaceAll(cursor.getString(cursor.getColumnIndex("Mandarin")), cursor.getString(cursor.getColumnIndex("Minnan")));
+        } while (cursor.moveToNext());
+        cursor.close();
+        return re;
     }
 
     public static String readSound(String[] Roman, int sex)throws IOException{
@@ -201,7 +222,7 @@ public class SQLiteclass {
             IOclass.write(in, Result);
         }else{
             for (int i = 0; i < Roman.length; i++){
-                if(Roman[i] == "?"){
+                if(Roman[i].equals("?")){
                     continue;
                 }
                 Result = IOclass.read(getMusicByRoman(Roman[i], sex));
