@@ -50,7 +50,6 @@ public class SearchActivity extends AppCompatActivity {
         final ImageButton ib_male = findViewById(R.id.id_male);
         final ImageButton ib_female = findViewById(R.id.id_female);
         final Context t = this;
-        InputManager.ShowInput(acti, et);
         tongyin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
