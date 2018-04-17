@@ -3,22 +3,15 @@ package com.mnysqtp.com.mnyproject.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mnysqtp.com.mnyproject.R;
+import com.mnysqtp.com.mnyproject.Utils.Util;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AboutFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AboutFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AboutFragment extends android.support.v4.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -37,6 +30,17 @@ public class AboutFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.sendInv(getContext());
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -123,4 +123,13 @@
         android:text="@string/ABOUT"
         android:textAppearance="@style/BadgeText" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="用户体验调查" />
+
 </RelativeLayout>

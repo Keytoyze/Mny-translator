@@ -1,6 +1,7 @@
 package com.mnysqtp.com.mnyproject.Activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +24,8 @@ import com.mnysqtp.com.mnyproject.Fragment.DictionaryFragment;
 import com.mnysqtp.com.mnyproject.Fragment.TranslationFragment;
 import com.mnysqtp.com.mnyproject.R;
 import com.mnysqtp.com.mnyproject.Utils.SQLiteclass;
+import com.mnysqtp.com.mnyproject.Utils.SharedPrefsUtils;
+import com.mnysqtp.com.mnyproject.Utils.Util;
 
 import java.io.InputStream;
 
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
     FragmentPagerAdapter adapter;
     ViewPager viewPager;
     long mExitTime = 0;
+    boolean show = true;
     @Override
     public void onFragmentInteraction(Uri Uri){
         if(Uri.toString().equals("SEARCH")){
@@ -140,6 +145,29 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.OnF
 
     @Override
     public void onBackPressed() {
+        if (show && SharedPrefsUtils.getBoolean("ans", true, this)) {
+            show = false;
+            new AlertDialog.Builder(this)
+                    .setTitle("用户体验调查")
+                    .setMessage("在退出之前，我们请求您花费两分钟时间完成一份调查问卷。这对于我们而言至关重要。\n由衷感谢您的使用！")
+                    .setPositiveButton("去完成", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                            Util.sendInv(MainActivity.this);
+                        }
+                    })
+                    .setNegativeButton("残忍拒绝", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .setCancelable(true)
+                    .show();
+        } else
         if(System.currentTimeMillis() - mExitTime < 800) {
             this.finish();
         }
